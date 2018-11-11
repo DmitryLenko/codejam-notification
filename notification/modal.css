@@ -1,0 +1,24 @@
+.modal-container {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    z-index: 5;
+    height: 300px;
+    width: 500px;
+    background-color: rgb(255,255,255);
+    border-radius: 7px;
+}
+
+.exit-buttom {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
+    color: rgb(136, 136, 136);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.exit-buttom:hover {
+    color: red;
+}
