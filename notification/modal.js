@@ -1,27 +1,27 @@
 class Info {
   constructor() {
     this.payload = [
-      'Email tip of the day',
+      'Email tip of the day1',
       'More than 60% of emails we send '
       + 'do not requaer a response. '
       + 'Use "No response need" to make sure'
       + 'recipients know that a response.',
-      'Email tip of the day',
+      'Email tip of the day2',
       'More than 60% of emails we send '
       + 'do not requaer a response. '
       + 'Use "No response need" to make sure'
       + 'recipients know that a response .',
-      'Email tip of the day',
+      'Email tip of the day3',
       'More than 60% of emails we send '
       + 'do not requaer a response. '
       + 'Use "No response need" to make sure'
       + 'recipients know that a response.',
-      'Email tip of the day',
+      'Email tip of the day4',
       'More than 60% of emails we send '
       + 'do not requaer a response. '
       + 'Use "No response need" to make sure'
       + 'recipients know that a response .',
-      'Email tip of the day',
+      'Email tip of the day5',
       'More than 60% of emails we send '
       + 'do not requaer a response. '
       + 'Use "No response need" to make sure'
@@ -30,39 +30,40 @@ class Info {
     this.infobox = undefined;
     this.infoheader = undefined;
     this.infotext = undefined;
-    this.begin = 0;
-    this.end = 2;
-    this.init = this.payload.slice(this.begin, this.end);
+    this.headerArray = this.payload.filter((item, index) => index % 2 === 0);
+    this.textArray = this.payload.filter((item, index) => index % 2 !== 0);
     this.createInfoheader();
     this.createInfotext();
     this.createInfoContainer();
   }
 
-  right() {
-    this.begin += 2;
-    this.end += 2;
-    this.init = this.payload.slice(this.begin, this.end);
-    this.infoheader.innerHTML = this.init[0];
-    this.infotext.innerHTML = this.init[1];
-  }
-
   createInfoheader() {
     this.infoheader = document.createElement('h3');
     this.infoheader.classList.add('info-header');
-    this.infoheader.innerHTML = this.init[0];
   }
 
   createInfotext() {
     this.infotext = document.createElement('p');
     this.infotext.classList.add('info-text');
-    this.infotext.innerHTML = this.init[1];
   }
 
   createInfoContainer() {
     this.infobox = document.createElement('div');
     this.infobox.classList.add('info');
-    this.infobox.appendChild(this.infoheader);
-    this.infobox.appendChild(this.infotext);
+    this.headerArray.forEach((element, index) => {
+      this.infoheader.innerHTML = element;
+      if (index !== 0) {
+        this.infoheader.style.display = 'none';
+      }
+      this.infobox.appendChild(this.infoheader.cloneNode(true));
+    });
+    this.textArray.forEach((element, index) => {
+      this.infotext.innerHTML = element;
+      if (index !== 0) {
+        this.infotext.style.display = 'none';
+      }
+      this.infobox.appendChild(this.infotext.cloneNode(true));
+    });
   }
 }
 
@@ -81,7 +82,7 @@ class CheckBox {
     this.check = document.createElement('input');
     this.check.classList.add('check-style');
     this.check.setAttribute('type', 'checkbox');
-    this.check.setAttribute('onclick', 'cheack()');
+    this.check.setAttribute('onclick', 'modalWindow.cheack()');
   }
 
   createParagraph() {
@@ -121,6 +122,7 @@ class SwapPanel extends Info {
     this.el.classList.add('swap-buttom');
     this.buttomRight = '';
     this.buttomLeft = '';
+    this.slideIndex = 0;
     this.itemRight = this.item.cloneNode(true);
     this.itemLeft = this.item.cloneNode(true);
     this.createButtomRight();
@@ -137,7 +139,7 @@ class SwapPanel extends Info {
   createButtomRight() {
     this.buttomRight = this.el.cloneNode(true);
     this.buttomRight.appendChild(this.itemRight);
-    this.buttomRight.setAttribute('onclick', 'modalWindow.rightBottomEvent()');
+    this.buttomRight.setAttribute('onclick', 'modalWindow.rightBottomEvent(1)');
     this.buttomRight.classList.add('flex-container');
     this.itemRight.classList.add('fa');
     this.itemRight.classList.add('fa-angle-right');
@@ -146,7 +148,7 @@ class SwapPanel extends Info {
   createButtomLeft() {
     this.buttomLeft = this.el.cloneNode(true);
     this.buttomLeft.appendChild(this.itemLeft);
-    this.buttomLeft.setAttribute('onclick', 'modalWindow.leftBottomEvent()');
+    this.buttomLeft.setAttribute('onclick', 'modalWindow.leftBottomEvent(-1)');
     this.buttomLeft.classList.add('flex-container');
     this.itemLeft.classList.add('fa');
     this.itemLeft.classList.add('fa-angle-left');
@@ -157,8 +159,31 @@ class SwapPanel extends Info {
     this.ul.classList.add('flex-container');
     this.li.classList.add('check-item');
     for (let i = 0; i < this.payload.length; i += 2) {
+      if (i === 0) {
+        this.li.classList.add('color-item');
+      } else { this.li.classList.remove('color-item'); }
       this.ul.appendChild(this.li.cloneNode(true));
     }
+  }
+
+  swapInit(n) {
+    this.slideIndex += n;
+    const header = document.getElementsByClassName('info-header');
+    const text = document.getElementsByClassName('info-text');
+    const check = document.getElementsByClassName('check-item');
+    const val = 1;
+    if (this.slideIndex >= header.length) { this.slideIndex = 0; }
+    if (this.slideIndex < 0) { this.slideIndex = header.length - 1; }
+    for (let i = 0; i < header.length; i += val) {
+      header[i].style.display = 'none';
+      text[i].style.display = 'none';
+    }
+    for (let i = 0; i < check.length; i += val) {
+      check[i].className = check[i].className.replace('color-item', '');
+    }
+    header[this.slideIndex].style.display = 'block';
+    text[this.slideIndex].style.display = 'block';
+    check[this.slideIndex].className += ' color-item';
   }
 }
 
@@ -170,6 +195,7 @@ class Popup {
     this.checkBtn = new CheckBox();
     this.info = new Info();
     this.swap = new SwapPanel();
+    this.isOpen = window.localStorage.getItem('item') === undefined ? true : window.localStorage.getItem('item');
     this.modal.appendChild(this.buttom.exit);
     this.modal.appendChild(this.checkBtn.checkContainer);
     this.modal.appendChild(this.info.infobox);
@@ -177,48 +203,49 @@ class Popup {
   }
 
   set() {
-    document.body.appendChild(this.modal);
+    if (this.isOpen !== 'false') { document.body.appendChild(this.modal); }
   }
 
   delette() {
     document.body.removeChild(this.modal);
   }
 
-  rightBottomEvent() {
-    this.info.right();
-    console.log(this.swap.ul); 
-    //this.info.end / 2;
+  rightBottomEvent(val) {
+    this.swap.swapInit(val);
   }
 
-  leftBottomEvent() {
-    console.log(this.swap);
+  leftBottomEvent(val) {
+    this.swap.swapInit(val);
+  }
+
+  cheack() {
+    this.isOpen = !this.isOpen;
+    window.localStorage.setItem('item', this.isOpen);
   }
 
   keyBoardEvent(event) {
+    const left = -1;
+    const right = 1;
     if (event.keyCode === 39) {
-      this.rightBottomEvent();
+      this.rightBottomEvent(right);
     } else if (event.keyCode === 37) {
-      this.leftBottomEvent();
+      this.leftBottomEvent(left);
     } else if (event.keyCode === 16) {
       window.localStorage.setItem('item', true);
+    } else if (event.keyCode === 27) {
+      this.delette();
+    } else if (event.keyCode === 13) {
+      this.isOpen = true;
+      this.set();
     }
   }
 }
 
-
-let isOpen = window.localStorage.getItem('item');
 const modalWindow = new Popup();
 
 window.onload = function init() {
   document.body.setAttribute('onkeyup', 'modalWindow.keyBoardEvent(event)');
   setTimeout(() => {
-    if (isOpen !== 'false') {
-      modalWindow.set();
-    }
+    modalWindow.set();
   }, 5000);
 };
-
-function cheack() {
-  isOpen = !isOpen;
-  window.localStorage.setItem('item', isOpen);
-}
