@@ -1,3 +1,63 @@
+class Info {
+  constructor() {
+    this.payload = [
+      'Email tip of the day',
+      'More than 60% of emails we send '
+      + 'do not requaer a response. '
+      + 'Use "No response need" to make sure'
+      + 'recipients know that a response.',
+      'Email tip of the day',
+      'More than 60% of emails we send '
+      + 'do not requaer a response. '
+      + 'Use "No response need" to make sure'
+      + 'recipients know that a response .',
+      'Email tip of the day',
+      'More than 60% of emails we send '
+      + 'do not requaer a response. '
+      + 'Use "No response need" to make sure'
+      + 'recipients know that a response.',
+      'Email tip of the day',
+      'More than 60% of emails we send '
+      + 'do not requaer a response. '
+      + 'Use "No response need" to make sure'
+      + 'recipients know that a response .',
+      'Email tip of the day',
+      'More than 60% of emails we send '
+      + 'do not requaer a response. '
+      + 'Use "No response need" to make sure'
+      + 'recipients know that a.',
+    ];
+    this.infobox = undefined;
+    this.infoheader = undefined;
+    this.infotext = undefined;
+    this.begin = 0;
+    this.end = 2;
+    this.init = this.payload.slice(this.begin, this.end);
+    this.createInfoheader();
+    this.createInfotext();
+    this.createInfoContainer();
+  }
+
+  createInfoheader() {
+    this.infoheader = document.createElement('h3');
+    this.infoheader.classList.add('info-header');
+    this.infoheader.innerHTML = this.init[0];
+  }
+
+  createInfotext() {
+    this.infotext = document.createElement('p');
+    this.infotext.classList.add('info-text');
+    this.infotext.innerHTML = this.init[1];
+  }
+
+  createInfoContainer() {
+    this.infobox = document.createElement('div');
+    this.infobox.classList.add('info');
+    this.infobox.appendChild(this.infoheader);
+    this.infobox.appendChild(this.infotext);
+  }
+}
+
 class CheckBox {
   constructor() {
     this.check = undefined;
@@ -49,8 +109,10 @@ class Popup {
     this.modal.classList.add('modal-container');
     this.buttom = new Exit();
     this.checkBtn = new CheckBox();
+    this.info = new Info();
     this.modal.appendChild(this.buttom.exit);
     this.modal.appendChild(this.checkBtn.checkContainer);
+    this.modal.appendChild(this.info.infobox);
   }
 
   set() {

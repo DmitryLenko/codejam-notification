@@ -48,3 +48,25 @@
     display: inline;
 }
 
+.info {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+    height: 200px;
+    width: 400px;
+    border: 1px solid black;
+}
+
+.info-header {
+    margin: 10;
+    font-size: 1.5rem;
+}
+
+.info-text {
+    padding: 0px 5px 0px 10px;
+    font-size: 1.2rem;
+    text-align: justify;
+}
+
+
