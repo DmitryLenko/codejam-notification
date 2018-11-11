@@ -1,0 +1,24 @@
+{
+  "name": "codejam-notification",
+  "version": "1.0.0",
+  "description": "Task info\r https://github.com/rolling-scopes-school/tasks/blob/2018-Q3/tasks/codejam-notification.md",
+  "main": "index.html",
+  "scripts": {
+    "start": "index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DmitryLenko/codejam-notification.git"
+  },
+  "author": "DmitryLenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DmitryLenko/codejam-notification/issues"
+  },
+  "homepage": "https://github.com/DmitryLenko/codejam-notification#readme",
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
