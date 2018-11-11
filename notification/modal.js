@@ -38,6 +38,14 @@ class Info {
     this.createInfoContainer();
   }
 
+  right() {
+    this.begin += 2;
+    this.end += 2;
+    this.init = this.payload.slice(this.begin, this.end);
+    this.infoheader.innerHTML = this.init[0];
+    this.infotext.innerHTML = this.init[1];
+  }
+
   createInfoheader() {
     this.infoheader = document.createElement('h3');
     this.infoheader.classList.add('info-header');
@@ -103,6 +111,57 @@ class Exit {
   }
 }
 
+class SwapPanel extends Info {
+  constructor() {
+    super();
+    this.el = document.createElement('buttom');
+    this.ul = document.createElement('ul');
+    this.li = document.createElement('li');
+    this.item = document.createElement('i');
+    this.el.classList.add('swap-buttom');
+    this.buttomRight = '';
+    this.buttomLeft = '';
+    this.itemRight = this.item.cloneNode(true);
+    this.itemLeft = this.item.cloneNode(true);
+    this.createButtomRight();
+    this.createButtomLeft();
+    this.createList();
+    this.container = document.createElement('div');
+    this.container.classList.add('swap-container');
+    this.container.classList.add('flex-container');
+    this.container.appendChild(this.buttomLeft);
+    this.container.appendChild(this.ul);
+    this.container.appendChild(this.buttomRight);
+  }
+
+  createButtomRight() {
+    this.buttomRight = this.el.cloneNode(true);
+    this.buttomRight.appendChild(this.itemRight);
+    this.buttomRight.setAttribute('onclick', 'modalWindow.rightBottomEvent()');
+    this.buttomRight.classList.add('flex-container');
+    this.itemRight.classList.add('fa');
+    this.itemRight.classList.add('fa-angle-right');
+  }
+
+  createButtomLeft() {
+    this.buttomLeft = this.el.cloneNode(true);
+    this.buttomLeft.appendChild(this.itemLeft);
+    this.buttomLeft.setAttribute('onclick', 'modalWindow.leftBottomEvent()');
+    this.buttomLeft.classList.add('flex-container');
+    this.itemLeft.classList.add('fa');
+    this.itemLeft.classList.add('fa-angle-left');
+  }
+
+  createList() {
+    this.ul.classList.add('check-list');
+    this.ul.classList.add('flex-container');
+    this.li.classList.add('check-item');
+    for (let i = 0; i < this.payload.length; i += 2) {
+      this.ul.appendChild(this.li.cloneNode(true));
+    }
+  }
+}
+
 class Popup {
   constructor() {
     this.modal = document.createElement('div');
@@ -110,9 +169,11 @@ class Popup {
     this.buttom = new Exit();
     this.checkBtn = new CheckBox();
     this.info = new Info();
+    this.swap = new SwapPanel();
     this.modal.appendChild(this.buttom.exit);
     this.modal.appendChild(this.checkBtn.checkContainer);
     this.modal.appendChild(this.info.infobox);
+    this.checkBtn.checkContainer.appendChild(this.swap.container);
   }
 
   set() {
@@ -121,6 +182,16 @@ class Popup {
 
   delette() {
     document.body.removeChild(this.modal);
+  }
+
+  rightBottomEvent() {
+    this.info.right();
+    console.log(this.swap.ul); 
+    //this.info.end / 2;
+  }
+
+  leftBottomEvent() {
+    console.log(this.swap);
   }
 
   keyBoardEvent(event) {

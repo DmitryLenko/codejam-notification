@@ -69,4 +69,46 @@
     text-align: justify;
 }
 
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.swap-container {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    height: 100%;
+    width: 50%;
+}
+
+.swap-buttom {
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    border: 2px solid rgb(136, 136, 136);
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.swap-buttom:hover {
+    background-color: blueviolet; 
+}
+
+.check-list {
+    padding: 0;
+    list-style-type: none
+}
+
+.check-item {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    margin: 5px;
+    background-color: rgb(201, 201, 201);
+    border-radius: 50%;
+}
 
